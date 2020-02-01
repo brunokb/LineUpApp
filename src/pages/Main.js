@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity, Button } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import { call } from 'react-native-reanimated';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
 import api from '../service/api';
 import { connect, disconnect } from '../service/socket';
-import SwitchToggle from "react-native-switch-toggle";
-
 
 
 function Main({ navigation }) {
@@ -40,17 +39,22 @@ function Main({ navigation }) {
         loadInitialPosition();
     }, []);
 
-    function setupWebSocket(){
-        connect();
+    function setupWebSocket() {
+        const { latitude, longitude } = currentRegion;
+        connect(
+            latitude,
+            longitude,
+            techs
+        );
     }
 
     async function loadDevs() {
         const { latitude, longitude } = currentRegion;
-        const response = await api.get('/search/', {
+         const response = await api.get('/search/', {
             params: {
                 latitude,
                 longitude,
-                techs: 'ReactJs'
+                techs
             }
         });
         setDevs(response.data);
@@ -62,23 +66,20 @@ function Main({ navigation }) {
     }
 
     if (!currentRegion) {
-        return null;
+        setCurrentRegion({
+            latitude: -37.817531,
+            longitude: 144.9501816,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+        });
     }
     return (
         <>
-         <MapView 
-            onRegionChangeComplete={handleRegionChange} 
-            /**initialRegion={currentRegion} 
-            -37.817531
-            144.9501816*/
-            initialRegion={{
-                latitude: -37.817531,
-                longitude: 144.9501816,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421,
-              }}          
-            style={styles.map}>
-                {devs.map (dev => (
+            <MapView
+                onRegionChangeComplete={handleRegionChange}
+                initialRegion={currentRegion}
+                style={styles.map}>
+                {devs.map(dev => (
                     <Marker
                         key={dev._id}
                         coordinate={{
@@ -100,12 +101,16 @@ function Main({ navigation }) {
             </MapView>
             <View style={styles.searchForm}>
                 <TextInput
-                    onChangeText={loadDevs}
+                    onChangeText={text => setTechs(text)}
                     style={styles.searchInput}
                     placeholder="Artist"
                     placeholderTextColor="#999"
                     autoCapitalize="words"
                     autoCorrect={false}
+                />
+                <Button
+                    title="Right button"
+                    onPress={loadDevs}
                 />
             </View>
         </>
@@ -161,13 +166,13 @@ const styles = StyleSheet.create({
         },
         elevation: 2
     },
-    toggleCircle: {  
+    toggleCircle: {
         width: 30,
         height: 30,
         borderRadius: 50,
         marginLeft: 5
     },
-    toggleContain: {  
+    toggleContain: {
         marginTop: 20,
         width: 70,
         height: 35,
