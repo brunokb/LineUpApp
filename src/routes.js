@@ -3,6 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Main from './pages/Main';
 import Profile from './pages/Profile';
+import Login from './pages/Login';
 
 const Routes = createAppContainer(
     createStackNavigator({
@@ -17,6 +18,13 @@ const Routes = createAppContainer(
             screen: Profile,
             navigationOptions:{
                 title: "Github",
+
+            }
+        },
+        Login:{
+            screen: Login,
+            navigationOptions:{
+               headerShown: false,
 
             }
         },

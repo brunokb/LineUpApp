@@ -50,7 +50,7 @@ function Main({ navigation }) {
 
     async function loadDevs() {
         const { latitude, longitude } = currentRegion;
-         const response = await api.get('/search/', {
+        const response = await api.get('/search/', {
             params: {
                 latitude,
                 longitude,
@@ -103,16 +103,30 @@ function Main({ navigation }) {
                 <TextInput
                     onChangeText={text => setTechs(text)}
                     style={styles.searchInput}
-                    placeholder="Artist"
+                    placeholder="Technology"
                     placeholderTextColor="#999"
                     autoCapitalize="words"
                     autoCorrect={false}
                 />
-                <Button
-                    title="Right button"
+                <Icon.Button
+                    name="github"
+                    size={35}
+                    borderRadius={50}
+                    backgroundColor="#25292e"
+                    iconStyle={styles.gitIcon}
                     onPress={loadDevs}
                 />
             </View>
+            <View style={styles.login}>
+                <Icon.Button
+                    name="github"
+                    backgroundColor="#25292e"
+                    size={35}
+                    onPress={() => {
+                        navigation.navigate('Login',{currentRegion});
+                    }}
+                >Login</Icon.Button>
+             </View>
         </>
     );
 }
@@ -148,7 +162,7 @@ const styles = StyleSheet.create({
         left: 20,
         right: 20,
         zIndex: 5,
-        flexDirection: 'column',
+        flexDirection: 'row',
     },
     searchInput: {
         flex: 1,
@@ -178,6 +192,16 @@ const styles = StyleSheet.create({
         height: 35,
         marginLeft: 300,
         borderRadius: 20,
+    },
+    gitIcon:{
+        marginRight: 0,
+        marginLeft: 0,
+        marginTop:0,
+        marginBottom:0,        
+    },
+    login:{
+        flex: 0.1,
+        backgroundColor:"#25292e"
     }
 
 
