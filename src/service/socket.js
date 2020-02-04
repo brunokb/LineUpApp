@@ -1,6 +1,6 @@
 import socketio from 'socket.io-client';
 
-const socket = socketio('http://localhost:8080/',
+const socket = socketio('http://lineup-259509.appspot.com',
 {
     autoConnect: false,
 
