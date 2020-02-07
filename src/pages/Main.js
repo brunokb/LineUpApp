@@ -123,10 +123,10 @@ function Main({ navigation }) {
                     backgroundColor="#25292e"
                     size={35}
                     onPress={() => {
-                        navigation.navigate('Login',{currentRegion});
+                        navigation.navigate('Login', { currentRegion });
                     }}
                 >Login</Icon.Button>
-             </View>
+            </View>
         </>
     );
 }
@@ -193,15 +193,15 @@ const styles = StyleSheet.create({
         marginLeft: 300,
         borderRadius: 20,
     },
-    gitIcon:{
+    gitIcon: {
         marginRight: 0,
         marginLeft: 0,
-        marginTop:0,
-        marginBottom:0,        
+        marginTop: 0,
+        marginBottom: 0,
     },
-    login:{
+    login: {
         flex: 0.1,
-        backgroundColor:"#25292e"
+        backgroundColor: "#25292e"
     }
 
 

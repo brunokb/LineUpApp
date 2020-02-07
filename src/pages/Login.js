@@ -9,11 +9,16 @@ function Login({ navigation }) {
     const [password, setPassword] = useState([]);
     const { latitude, longitude } = navigation.getParam('currentRegion')
     async function checkDevs() {
-        const response = await api.post('/users/', {
-            github_username: username,
+        const response = await api.post('/users/',{
+            github_username: username.toLowerCase(),
             password_hash: password,
             latitude,
         	longitude
+        }).then(response => { 
+            console.log(response)
+        })
+        .catch(error => {
+            console.log(error)
         });
         navigation.navigate('Main');
     }
