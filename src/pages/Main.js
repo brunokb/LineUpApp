@@ -125,7 +125,7 @@ function Main({ navigation }) {
                     onPress={() => {
                         navigation.navigate('Login', { currentRegion });
                     }}
-                >Login</Icon.Button>
+                >Register</Icon.Button>
             </View>
         </>
     );

@@ -1,5 +1,5 @@
 import React ,{useState} from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Alert } from 'react-native';
 import LoginScreen from "react-native-login-screen";
 import api from '../service/api';
 
@@ -14,11 +14,11 @@ function Login({ navigation }) {
             password_hash: password,
             latitude,
         	longitude
-        }).then(response => { 
-            console.log(response)
+        }).then(response => {   
+            Alert.alert('User', response.data)
         })
         .catch(error => {
-            console.log(error)
+            Alert.alert("Erro",error)
         });
         navigation.navigate('Main');
     }
